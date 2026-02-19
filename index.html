@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoVibe | Стиль, который бережет планету</title>
+    <style>
+        /* Базовые настройки и цвета */
+        :root {
+            --bg-color: #F7F5F0;
+            --text-dark: #2C3E2D;
+            --accent: #B2D824;
+            --white: #FFFFFF;
+        }
+
+        html { scroll-behavior: smooth; } /* Плавная прокрутка для логотипа и меню */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Навигация */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(247, 245, 240, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .logo { 
+            font-size: 24px; 
+            font-weight: bold; 
+            letter-spacing: 1px; 
+            text-decoration: none; /* Убираем подчеркивание у ссылки */
+            color: var(--text-dark);
+            transition: transform 0.3s;
+        }
+        .logo span { color: var(--accent); }
+        .logo:hover { transform: scale(1.05); } /* Легкое увеличение при наведении */
+        
+        nav a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav a:hover { color: var(--accent); }
+
+        /* Анимации появления */
+        .hidden {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        .show { opacity: 1; transform: translateY(0); }
+
+        /* Главный экран */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: linear-gradient(rgba(44, 62, 45, 0.7), rgba(44, 62, 45, 0.7)), url('https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: var(--white);
+        }
+        .hero h1 { font-size: 4rem; margin-bottom: 20px; text-transform: uppercase; }
+        .hero p { font-size: 1.2rem; max-width: 600px; margin-bottom: 30px; }
+        
+        .btn {
+            padding: 15px 30px;
+            background-color: var(--accent);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(178, 216, 36, 0.4); }
+
+        /* Секции */
+        section { padding: 100px 50px; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: var(--text-dark); }
+
+        /* Каталог */
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .product-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover { transform: translateY(-10px); }
+        .product-img { width: 100%; height: 350px; object-fit: cover; }
+        .product-info { padding: 20px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        
+        .buy-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: var(--text-dark);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 20px;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+        .buy-btn:hover { background-color: var(--accent); color: var(--text-dark); }
+
+        /* Интерактивный оверлей (теперь только на картинке, чтобы кнопку можно было нажать) */
+        .img-container { position: relative; overflow: hidden; }
+        .product-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(44, 62, 45, 0.9); color: var(--white);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.4s ease; padding: 20px; text-align: center;
+        }
+        .img-container:hover .product-overlay { opacity: 1; }
+
+        /* Контакты и форма */
+        .contact-container { display: flex; gap: 50px; flex-wrap: wrap; }
+        .form-box { flex: 1; background: var(--white); padding: 40px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .form-box input, .form-box textarea { width: 100%; padding: 15px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 10px; outline: none; }
+        .form-box input:focus, .form-box textarea:focus { border-color: var(--accent); }
+        
+        /* Кнопка отправки на всю ширину */
+        .submit-btn { width: 100%; }
+
+        footer { text-align: center; padding: 30px; background: var(--text-dark); color: var(--white); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#home" class="logo">Eco<span>Vibe</span></a>
+        <nav>
+            <a href="#catalog">Магазин</a>
+            <a href="#contact">Контакты</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <h1 class="hidden">Стиль, который спасает планету</h1>
+        <p class="hidden">Мы создаем городские рюкзаки и сумки из переработанных материалов.</p>
+        <a href="#catalog" class="btn hidden">Смотреть магазин</a>
+    </section>
+
+    <section id="catalog">
+        <h2 class="section-title hidden">Наши бестселлеры</h2>
+        <div class="catalog-grid">
+            
+            <div class="product-card hidden">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80" alt="Рюкзак Urban" class="product-img">
+                    <div class="product-overlay">
+                        <h3>♻️ Переработанный ПЭТ</h3>
+                        <p>💧 100% Влагозащита</p>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div>
+                        <h3>Рюкзак "Urban Eco"</h3>
+                        <p style="font-size: 1.2rem; font-weight: bold; margin: 10px 0;">8 900 ₽</p>
+                    </div>
+                    <a href="https://твой-сайт-оплаты.com/link/123" class="buy-btn" target="_blank">Оплатить картой 💳</a>
+                </div>
+            </div>
+
+            <div class="product-card hidden">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&w=600&q=80" alt="Сумка Shopper" class="product-img">
+                    <div class="product-overlay">
+                        <h3>♻️ Океанический пластик</h3>
+                        <p>💻 Вмещает ноутбук 15"</p>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <div>
+                        <h3>Шоппер "Ocean Save"</h3>
+                        <p style="font-size: 1.2rem; font-weight: bold; margin: 10px 0;">4 500 ₽</p>
+                    </div>
+                    <a href="https://твой-сайт-оплаты.com/link/456" class="buy-btn" target="_blank">Оплатить картой 💳</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title hidden">Напиши нам</h2>
+        <div class="contact-container hidden">
+            <div class="form-box" style="max-width: 600px; margin: 0 auto;">
+                
+                <form action="https://formsubmit.co/gummyfredbear@gmail.com" method="POST">
+                    
+                    <input type="hidden" name="_subject" value="Новое сообщение с сайта EcoVibe!">
+                    <input type="hidden" name="_captcha" value="false">
+                    
+                    <input type="text" name="name" placeholder="Твое имя" required>
+                    <input type="email" name="email" placeholder="Твой Email (чтобы мы ответили)" required>
+                    <textarea name="message" rows="5" placeholder="Сообщение или вопрос..." required></textarea>
+                    
+                    <button type="submit" class="btn submit-btn">Отправить сообщение 🚀</button>
+                </form>
+                
+                <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: #666;">
+                    *Письмо придет напрямую на gummyfredbear@gmail.com
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 EcoVibe. Сделано с любовью к планете 🌍</p>
+    </footer>
+
+    <script>
+        // Анимация при скролле
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
