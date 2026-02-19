@@ -3,37 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoVibe | Стиль, который бережет планету</title>
+    <title>EcoVibe | Стиль и Экология</title>
     <style>
-        /* --- БАЗОВЫЕ НАСТРОЙКИ И ЦВЕТА --- */
         :root {
-            --bg-color: #F7F5F0;
-            --text-dark: #2C3E2D;
+            --bg: #F7F5F0;
+            --dark: #2C3E2D;
             --accent: #B2D824;
             --white: #FFFFFF;
-            --error: #f44336;
-            --success: #4CAF50;
         }
 
         html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--dark); font-family: sans-serif; margin: 0; overflow-x: hidden; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* --- НАВИГАЦИЯ --- */
+        /* Навигация */
         header {
-            display: flex;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 50px; background: rgba(247, 245, 240, 0.9);
+            position: fixed; width: 100%; top: 0; z-index: 100; box-sizing: border-box;
+        }
+        .logo { font-size: 24px; font-weight: bold; text-decoration: none; color: var(--dark); }
+        .logo span { color: var(--accent); }
+        nav a { margin-left: 20px; text-decoration: none; color: var(--dark); font-weight: 500; }
+
+        /* Секции */
+        section { padding: 100px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
+        .hero { 
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; 
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1200&q=80') center/cover;
+            color: white; max-width: 100%;
+        }
+        .hero h1 { font-size: 3.5rem; }
+
+        /* Магазин */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px; }
+        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding-bottom: 20px; }
+        .card img { width: 100%; height: 300px; object-fit: cover; }
+        .price { font-size: 1.2rem; font-weight: bold; display: block; margin: 15px 0; }
+
+        /* Кнопки */
+        .btn { 
+            padding: 12px 25px; border-radius: 25px; border: none; cursor: pointer; 
+            font-weight: bold; text-decoration: none; transition: 0.3s; display: inline-block;
+        }
+        .btn-main { background: var(--accent); color: var(--dark); }
+        .btn-buy { background: var(--dark); color: white; width: 80%; }
+        .btn:hover { transform: scale(1.05); opacity: 0.9; }
+
+        /* Форма */
+        .form-container { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 500px; margin: 0 auto; }
+        input, textarea { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .submit-btn { width: 100%; background: var(--dark); color: white; font-size: 1rem; }
+
+        /* Анимации появления */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: 0.8s; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        footer { padding: 40px; background: var(--dark); color: white; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#home" class="logo">Eco<span>Vibe</span></a>
+        <nav>
+            <a href="#shop">Магазин</a>
+            <a href="#contact">Контакты</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <h1>EcoVibe</h1>
+        <p>Рюкзаки из будущего, в котором нет мусора</p>
+        <div><a href="#shop" class="btn btn-main">В каталог</a></div>
+    </section>
+
+    <section id="shop">
+        <h2 class="fade-in">Наши рюкзаки</h2>
+        <div class="grid">
+            <div class="card fade-in">
+                <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500" alt="Рюкзак">
+                <h3>Urban Eco</h3>
+                <span class="price">8 900 ₽</span>
+                <a href="#" class="btn btn-buy">Купить картой</a>
+            </div>
+            <div class="card fade-in">
+                <img src="https://images.unsplash.com/photo-1547949003-9792a18a2601?auto=format&fit=crop&w=500" alt="Сумка">
+                <h3>Ocean Shopper</h3>
+                <span class="price">4 500 ₽</span>
+                <a href="#" class="btn btn-buy">Купить картой</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="fade-in">Есть вопросы?</h2>
+        <div class="form-container fade-in">
+            <form id="ecoForm">
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="email" name="email" placeholder="Ваш Email" required>
+                <textarea name="message" rows="4" placeholder="Ваше сообщение" required></textarea>
+                <button type="submit" class="btn submit-btn" id="sBtn">Отправить сообщение 🚀</button>
+            </form>
+            <p id="resText" style="margin-top: 15px; font-weight: bold;"></p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 EcoVibe. Делаем мир чище.</p>
+    </footer>
+
+    <script>
+        // 1. Плавное появление при скролле
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+        // 2. ОТПРАВКА БЕЗ ПЕРЕХОДА (AJAX)
+        const form = document.getElementById('ecoForm');
+        const btn = document.getElementById('sBtn');
+        const res = document.getElementById('resText');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Это ПЕРВАЯ строка, она блокирует переход
+
+            const originalBtn = btn.textContent;
+            btn.textContent = 'Отправка...';
+            btn.disabled = true;
+
+            const data = new FormData(form);
+
+            // Используем специальный URL /ajax/ для FormSubmit
+            fetch("https://formsubmit.co/ajax/gummyfredbear@gmail.com", {
+                method: "POST",
+                body: data
+            })
+            .then(response => response.json())
+            .then(json => {
+                console.log(json);
+                btn.textContent = 'Успешно! ✔️';
+                btn.style.background = '#4CAF50';
+                res.textContent = 'Спасибо! Мы получили ваше письмо.';
+                form.reset();
+
+                // Через 5 секунд возвращаем кнопку в норму
+                setTimeout(() => {
+                    btn.textContent = originalBtn;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                    res.textContent = '';
+                }, 5000);
+            })
+            .catch(err => {
+                btn.textContent = 'Ошибка ❌';
+                btn.style.background = '#f44336';
+                res.textContent = 'Что-то пошло не так. Попробуйте еще раз.';
+                setTimeout(() => {
+                    btn.textContent = originalBtn;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>
+
             justify-content: space-between;
             align-items: center;
             padding: 20px 50px;
